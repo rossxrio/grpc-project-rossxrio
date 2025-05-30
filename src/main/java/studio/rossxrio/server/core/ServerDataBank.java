@@ -1,4 +1,4 @@
-package studio.rossxrio.server;
+package studio.rossxrio.server.core;
 
 import java.util.HashMap;
 

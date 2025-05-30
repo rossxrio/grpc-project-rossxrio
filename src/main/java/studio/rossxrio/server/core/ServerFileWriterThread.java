@@ -1,4 +1,4 @@
-package studio.rossxrio.server;
+package studio.rossxrio.server.core;
 
 import studio.rossxrio.server.utility.ServerMessageLevel;
 
@@ -19,7 +19,7 @@ public class ServerFileWriterThread implements Runnable {
     public ServerFileWriterThread(String USER_ALIAS) {
         this.USER_ALIAS = USER_ALIAS;
 
-        String path = String.format("outputFiles/%s.txt", USER_ALIAS);
+        String path = String.format("output_files/user_%s.txt", USER_ALIAS.toLowerCase());
         file = new File(path);
         if (createFile()) {
             try {

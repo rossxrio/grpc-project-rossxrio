@@ -1,4 +1,4 @@
-package studio.rossxrio.server;
+package studio.rossxrio.server.core;
 
 import studio.rossxrio.server.utility.ServerMessage;
 import studio.rossxrio.server.utility.ServerMessageLevel;

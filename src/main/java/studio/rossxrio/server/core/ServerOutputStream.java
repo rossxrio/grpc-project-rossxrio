@@ -1,4 +1,4 @@
-package studio.rossxrio.server;
+package studio.rossxrio.server.core;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,7 +10,7 @@ public class ServerOutputStream {
     private FileWriter fileWriter;
 
     public ServerOutputStream() {
-        String path = String.format("logs/%s", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm")));
+        String path = String.format("logs/%s.txt", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm")));
         File log = new File(path);
 
         try {
