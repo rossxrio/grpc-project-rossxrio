@@ -22,7 +22,7 @@ public class ClientInformation implements Runnable {
                 List<String> dataCollect = ClientDataBank.getDataBank();
                 System.out.printf("Lines read: %d, words on memory: %d, words sent: %d\n", readLines, dataCollect.size(), sentWords);
 
-                // ClientFileReader ends a lot faster than ClientDataStream so this ensures the loop doesn't stop
+                // ClientFileReader ends a lot faster than ClientDataStream so this ensures the loop doesn't serverStop
                 if (ClientFIleReader.endReading) {
                     GRPCClient.turn = 2;
                     GRPCClient.STREAM_CON.signal();

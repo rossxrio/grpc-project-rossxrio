@@ -17,13 +17,12 @@ public class ServerInformation implements Runnable {
 
     public static int servicesAlive = 2;
     private int n = 0;
-
     /**
      * Print any relevant information
      */
     private void serverInformation() {
-        // The loop isn't meant to stop
-        while (true) {
+        // The loop isn't meant to serverStop
+        while (!GRPCServer.serverStop) {
             try {
                 GRPCServer.LOCK.lock();
                 while (GRPCServer.turn != 3) GRPCServer.INFO_C0N.await();
