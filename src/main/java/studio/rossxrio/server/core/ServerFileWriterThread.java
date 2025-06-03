@@ -58,7 +58,7 @@ public class ServerFileWriterThread implements Runnable {
                     indexData.add(ServerDataBank.readData(USER_ALIAS));
 
                     fileWriter.write(String.format("%s, \n", indexData.get(i)));
-                    ServerInformation.wordsWriten++;
+                    ServerInformation.wordsWritten++;
                     fileWriter.flush();
 
                     if (indexData.get(i).equals(" -1")) {

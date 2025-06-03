@@ -2,7 +2,7 @@ package studio.rossxrio.server.core;
 
 import io.grpc.ServerBuilder;
 import io.grpc.Server;
-import studio.rossxrio.server.cli.ServerCommandLineInterface;
+import studio.rossxrio.server.cli.ServerCLI;
 import studio.rossxrio.server.utility.ServerMessageLevel;
 
 import java.io.IOException;
@@ -17,8 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GRPCServer {
     public static final Server server = ServerBuilder.forPort(3009).addService(new ServerClientAPI()).build();
     public static final Thread serverInfo = new Thread(new ServerInformation());
-    public static final Thread serverCLI = new Thread(new ServerCommandLineInterface());
-    public static boolean serverStop = false;
+    public static final Thread serverCLI = new Thread(new ServerCLI());
 
     protected final static Lock LOCK = new ReentrantLock();
     protected final static Condition DATA_BUFFER_CON = LOCK.newCondition();
@@ -31,16 +30,11 @@ public class GRPCServer {
             server.start();
             serverInfo.start();
             serverCLI.start();
-            ServerInformation.newMessage(String.format("Server started at %d. Services available %d\n", server.getPort(), server.getServices().size()), ServerMessageLevel.INFO);
 
+            ServerInformation.newMessage(String.format("Server started at %d. Services available %d\n", server.getPort(), server.getServices().size()), ServerMessageLevel.INFO);
             server.awaitTermination();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void stop() {
-        serverStop = true;
-        server.shutdownNow();
     }
 }

@@ -13,16 +13,17 @@ public class ServerInformation implements Runnable {
     private final static ServerOutputStream SERVER_OUTPUT_STREAM = new ServerOutputStream();
 
     protected static int clientsOnline = 0;
-    protected static int wordsWriten = 0;
+    protected static int wordsWritten = 0;
 
     public static int servicesAlive = 2;
     private int n = 0;
+
     /**
      * Print any relevant information
      */
     private void serverInformation() {
-        // The loop isn't meant to serverStop
-        while (!GRPCServer.serverStop) {
+        // The loop isn't meant to stop unless interrupted
+        while (true) {
             try {
                 GRPCServer.LOCK.lock();
                 while (GRPCServer.turn != 3) GRPCServer.INFO_C0N.await();
@@ -36,12 +37,11 @@ public class ServerInformation implements Runnable {
                 String[] words = dataCollect.split(" ");
                 n += words.length;
                 countWords();
-                newMessage(String.format("Clients online %d, words on memory %d, words written %d\n", clientsOnline, n, wordsWriten),ServerMessageLevel.INFO);
-
-
+                newMessage(String.format("Clients online %d, words on memory %d, words written %d\n", clientsOnline, n, wordsWritten),ServerMessageLevel.INFO);
 
             } catch (InterruptedException e) {
-                ServerInformation.newMessage(String.format("Something went really wrong with the server info thread...\n (%s)", e), ServerMessageLevel.ERROR);
+                ServerInformation.newMessage("Closing server threads (1/2)\n", ServerMessageLevel.WARNING);
+                return;
             } finally {
                 GRPCServer.turn = 1;
                 GRPCServer.DATA_BUFFER_CON.signal();
